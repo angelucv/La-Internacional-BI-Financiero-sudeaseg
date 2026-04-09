@@ -21,7 +21,7 @@ streamlit run app.py
 4. **Deploy**. Streamlit instalará dependencias desde `requirements.txt`.
 5. Asegúrate de que la carpeta **`data/public/`** con los CSV esté versionada en el repo (o configura secretos / almacenamiento si más adelante mueves los datos).
 
-Los logos opcionales van en **`Images/`** (ver nombres en `demo_config.py`).
+La carpeta **`data/raw/`** (PDF y Excel de SUDEASEG) **no se sube a GitHub** por tamaño; queda en local para regenerar CSV con `scripts/`. Los logos van en **`Images/`** (ver `demo_config.py`).
 
 ## Requisitos
 
