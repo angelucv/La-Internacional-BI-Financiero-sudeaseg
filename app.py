@@ -19,7 +19,7 @@ st.set_page_config(
 
 render_demo_sidebar()
 
-render_brand_header("Panel para reunión de accionistas — datos oficiales SUDEASEG")
+render_brand_header()
 
 st.markdown(
     "Aquí puede consultar de forma integrada la posición de **La Internacional** en el mercado asegurador "
