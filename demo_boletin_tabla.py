@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import html
 import math
+import textwrap
 from typing import Any
 
 import pandas as pd
@@ -146,22 +147,25 @@ def render_cuadro_boletin_ranking(
 
     mes = fecha.strftime("%Y-%m")
     subhdr_bg = "#64748b"
-    thead = f"""
-    <thead>
-      <tr style="background:{COLOR_BRAND_NAVY};color:#fff;">
-        <th style="padding:12px 10px;text-align:center;font-weight:700;">PNC al inicio</th>
-        <th style="padding:12px 10px;text-align:center;font-weight:700;">Empresa</th>
-        <th style="padding:12px 10px;text-align:center;font-weight:700;">Primas YTD</th>
-        <th style="padding:12px 10px;text-align:center;font-weight:700;">% participación<br/>en el mercado</th>
-      </tr>
-      <tr style="background:{subhdr_bg};color:#fff;font-size:0.82rem;">
-        <th style="padding:6px 10px;text-align:center;font-weight:600;">Miles de Bs.</th>
-        <th style="padding:6px 10px;text-align:center;font-weight:600;"></th>
-        <th style="padding:6px 10px;text-align:center;font-weight:600;">Miles de Bs.</th>
-        <th style="padding:6px 10px;text-align:center;font-weight:600;"></th>
-      </tr>
-    </thead>
-    """
+    # Sin sangría de 4+ espacios antes de las etiquetas: en Markdown eso se renderiza como bloque de código.
+    thead = textwrap.dedent(
+        f"""
+<thead>
+<tr style="background:{COLOR_BRAND_NAVY};color:#fff;">
+<th style="padding:12px 10px;text-align:center;font-weight:700;">PNC al inicio</th>
+<th style="padding:12px 10px;text-align:center;font-weight:700;">Empresa</th>
+<th style="padding:12px 10px;text-align:center;font-weight:700;">Primas YTD</th>
+<th style="padding:12px 10px;text-align:center;font-weight:700;">% participación<br/>en el mercado</th>
+</tr>
+<tr style="background:{subhdr_bg};color:#fff;font-size:0.82rem;">
+<th style="padding:6px 10px;text-align:center;font-weight:600;">Miles de Bs.</th>
+<th style="padding:6px 10px;text-align:center;font-weight:600;"></th>
+<th style="padding:6px 10px;text-align:center;font-weight:600;">Miles de Bs.</th>
+<th style="padding:6px 10px;text-align:center;font-weight:600;"></th>
+</tr>
+</thead>
+"""
+    ).strip()
 
     st_module.markdown(f"#### {titulo}")
     st_module.markdown(
@@ -174,13 +178,10 @@ def render_cuadro_boletin_ranking(
     if descripcion:
         st_module.markdown(descripcion)
 
-    table = f"""
-<div class="boletin-cuadro-wrap" style="margin:0.5rem 0 1.25rem 0;overflow-x:auto;">
-  <table style="width:100%;border-collapse:collapse;font-family:Segoe UI,system-ui,sans-serif;font-size:0.92rem;
-    box-shadow:0 2px 12px rgba(39,48,110,0.12);border-radius:8px;overflow:hidden;">
-    {thead}
-    <tbody>{"".join(rows_html)}</tbody>
-  </table>
-</div>
-"""
+    table = (
+        '<div class="boletin-cuadro-wrap" style="margin:0.5rem 0 1.25rem 0;overflow-x:auto;">'
+        '<table style="width:100%;border-collapse:collapse;font-family:Segoe UI,system-ui,sans-serif;'
+        "font-size:0.92rem;box-shadow:0 2px 12px rgba(39,48,110,0.12);border-radius:8px;overflow:hidden;\">"
+        f"{thead}<tbody>{''.join(rows_html)}</tbody></table></div>"
+    )
     st_module.markdown(table, unsafe_allow_html=True)
