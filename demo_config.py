@@ -27,7 +27,7 @@ HEADER_LOGO_BASENAMES: tuple[str, ...] = (
 # Título bajo el logo (cabecera principal)
 APP_NAME = "Demo BI información financiera La Internacional"
 # Texto corto para sidebar / pestañas del navegador
-APP_NAME_SHORT = "Inteligencia de mercado · La Internacional"
+APP_NAME_SHORT = "La Internacional · mercado y sector"
 COMPANY_FOCUS = "Internacional, C.A. de Seguros"
 DATA_YEAR = 2023
 
@@ -128,17 +128,15 @@ FUENTE_DATOS = (
     "(primas netas por empresa), compilación para el demo."
 )
 
-# Sidebar: texto resumido para dirección + autor (HTML)
+# Sidebar: texto concreto (sin rótulos tipo «para la dirección») + autor (HTML)
 SIDEBAR_RESUMEN_HTML = (
-    "<p style='margin:0 0 0.65rem 0;line-height:1.5;font-size:0.98rem;color:#27306E;'>"
-    "<strong>Para la dirección:</strong> competitividad, ratios frente al sector y dinámica de primas "
-    "(vista estratégica, no operativa).</p>"
-    "<p style='margin:0 0 0.65rem 0;line-height:1.5;font-size:0.98rem;color:#27306E;'>"
-    "<strong>Contenido:</strong> ranking y participación; siniestralidad, comisiones y gastos vs "
-    "promedio SUDEASEG; primas USD (BCV). Contexto para decisiones comerciales y de gestión.</p>"
-    "<p style='margin:0;line-height:1.45;font-size:0.86rem;color:#4a4a4a;'>"
-    "<strong>Fuentes:</strong> SUDEASEG — anuario <em>Seguro en Cifras</em>, boletines y series. "
-    "Las cifras oficiales de cierre son las de los estados contables.</p>"
+    "<p style='margin:0 0 0.7rem 0;line-height:1.52;font-size:0.98rem;color:#27306E;'>"
+    "Ranking y participación de mercado; siniestralidad, comisiones y gastos "
+    "frente al <strong>promedio del sector</strong> (boletín SUDEASEG); primas mensuales en "
+    "<strong>USD</strong> con tipo de cambio BCV.</p>"
+    "<p style='margin:0;line-height:1.48;font-size:0.88rem;color:#4a4a4a;'>"
+    "Todo proviene de información pública SUDEASEG: anuario <em>Seguro en Cifras</em>, boletines "
+    "y series de primas. Los cierres contables oficiales son los de los estados financieros auditados.</p>"
 )
 SIDEBAR_AUTOR_HTML = (
     '<p style="margin:0.9rem 0 0 0;padding-top:0.75rem;border-top:1px solid rgba(39,48,110,0.18);'
