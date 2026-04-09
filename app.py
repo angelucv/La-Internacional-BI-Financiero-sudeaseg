@@ -29,16 +29,17 @@ render_demo_sidebar()
 render_brand_header("Panel para reunión de accionistas — datos oficiales SUDEASEG")
 
 st.markdown(
-    f"Este panel es una **vista rápida** para la conversación con accionistas: "
-    f"**ranking y Top 3** con la serie **más actual (2026, YTD)** según SUDEASEG, "
-    f"más **indicadores** del anuario de referencia y una **serie histórica** con primas **mensuales** "
-    f"(diferencia de acumulados) para ver el ritmo sin el efecto de cierre de año."
+    "Este panel es una **vista rápida** para la conversación con accionistas: "
+    "**ranking y participación** con las primas **más recientes** publicadas por SUDEASEG "
+    "(acumulado del año hasta el último mes disponible en la descarga), "
+    "más **indicadores** del anuario de referencia y una **serie histórica** con primas **mensuales** "
+    "(diferencia de acumulados) para ver el ritmo sin el efecto de cierre de año."
 )
 
 st.subheader("Cómo usarlo")
 st.markdown(
-    "- **Top 3 empresas 2026**: ranking y **primas YTD en USD** (tipo BCV por mes); indicadores del "
-    "**cuadro 29 (anuario 2023)**.\n"
+    f"- **Sector e Internacional**: ranking, primas en USD (tipo de cambio del mes) e indicadores del "
+    f"**cuadro 29** (referencia anuario {DATA_YEAR}).\n"
     "- **Serie histórica**: evolución del flujo mensual y participación; comparativa con el top del mercado "
     "y La Internacional.\n"
     "- Los importes siguen las **unidades de los cuadros fuente** (anuario y series mensuales SUDEASEG)."

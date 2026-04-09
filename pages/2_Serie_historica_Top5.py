@@ -72,7 +72,7 @@ st.markdown(
 
 render_demo_sidebar()
 
-render_brand_header("Primas mensuales · USD (BCV) · participación · Top del mercado vs La Internacional")
+render_brand_header()
 st.markdown('<p class="page-h1">Serie histórica</p>', unsafe_allow_html=True)
 
 try:
@@ -110,14 +110,14 @@ with m2:
     st.metric("Ranking La Int.", f"#{rank_i}" if rank_i else "—")
 with m3:
     st.metric(
-        "YTD La Int. (M USD)",
+        "Acum. año La Int. (M USD)",
         f"{ytd_usd_intl:,.2f}" if ytd_usd_intl == ytd_usd_intl else "—",
     )
 with m4:
     st.metric("Participación", f"{part_i:.2f} %" if part_i is not None else "—")
 
 st.caption(
-    f"USD: flujos mensuales al tipo BCV de cada mes · Cierre SUDEASEG **{pd.Timestamp(ult).strftime('%Y-%m-%d')}**."
+    f"USD: flujo mensual al tipo oficial de cada mes · Cierre SUDEASEG **{pd.Timestamp(ult).strftime('%Y-%m-%d')}**."
 )
 
 rank_ult = tabla_ranking_en_fecha(df, pd.Timestamp(ult))
@@ -128,7 +128,7 @@ render_cuadro_boletin_ranking(
     pd.Timestamp(ult),
     top_n=10,
     titulo="Mismo cuadro boletín en la fecha de análisis",
-    descripcion="Top 10 del ranking en el último cierre de la serie; **PNC al inicio** con la misma definición que en Top 3.",
+    descripcion="Top 10 del ranking en el último cierre de la serie; **PNC al inicio** con la misma definición que en Sector e Internacional.",
 )
 
 df_res_boletin = load_resultado_tecnico_saldo()
@@ -152,7 +152,7 @@ if (
         else "el líder"
     )
     st.markdown(
-        f'<p class="block-note">vs <strong>{leader_lbl}</strong> (#1): YTD USD La Internacional = '
+        f'<p class="block-note">vs <strong>{leader_lbl}</strong> (#1): acumulado en USD de La Internacional = '
         f"<strong>{pct_usd:.1f}%</strong> del líder.</p>",
         unsafe_allow_html=True,
     )
@@ -165,7 +165,7 @@ with st.expander("Metodología (flujo mensual y USD)", expanded=False):
 
 unidad = st.radio(
     "Unidad del gráfico de flujo",
-    ["Millones USD (tipo BCV por mes)", "Miles de Bs. nominales (sin conversión)"],
+    ["Millones USD (tipo oficial por mes)", "Miles de Bs. nominales (sin conversión)"],
     horizontal=True,
     index=0,
 )
@@ -219,14 +219,14 @@ for i, pid in enumerate(peer_ids):
     )
 
 title_main = (
-    "Primas netas del mes — en millones de dólares (tipo de cambio oficial BCV, cada mes)"
+    "Primas netas del mes — en millones de dólares (tipo oficial de cada mes)"
     if use_usd
     else "Primas netas del mes — miles de bolívares nominales (sin conversión)"
 )
 subtitle = (
     "Cada punto usa el tipo VES/USD del cierre de mes correspondiente · Fuente primas: SUDEASEG"
     if use_usd
-    else "Estimado como diferencia de acumulados YTD publicados por SUDEASEG"
+    else "Estimado como diferencia de acumulados del año publicados por SUDEASEG"
 )
 
 fig.update_layout(
@@ -292,8 +292,9 @@ with st.expander("Fuente de los datos", expanded=False):
     st.markdown(FUENTE_DATOS)
 
 with st.expander("Lectura comparativa (guía para la reunión)", expanded=False):
+    ult_ym = pd.Timestamp(ult).strftime("%Y-%m")
     st.markdown(
-        """
+        f"""
 **Primas en bolívares vs USD**
 
 - SUDEASEG publica primas en **bolívares nominales** (miles de Bs.). La inflación puede inflar la serie nominal.
@@ -301,7 +302,7 @@ with st.expander("Lectura comparativa (guía para la reunión)", expanded=False)
   construido con `scripts/build_bcv_mensual.py`: donde hay cotización diaria replicada vía API pública se toma el **último día del mes**; 
   el resto se interpola entre **anclas** de referencia. **Valide** las cifras contra el BCV para trabajo fino.
 
-**YTD en USD**
+**Acumulado en USD**
 
 - Es la **suma** de los flujos mensuales ya convertidos; no es el acumulado en Bs. dividido por un solo tipo.
 
@@ -311,7 +312,7 @@ with st.expander("Lectura comparativa (guía para la reunión)", expanded=False)
 
 **Limitaciones**
 
-- 2026: solo meses publicados en la descarga de SUDEASEG.
+- Solo aparecen los meses ya publicados por SUDEASEG; el último cierre en esta vista es **{ult_ym}**.
 """
     )
 

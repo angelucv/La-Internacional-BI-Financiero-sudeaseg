@@ -133,7 +133,7 @@ SIDEBAR_RESUMEN_HTML = (
     "<p style='margin:0 0 0.7rem 0;line-height:1.52;font-size:0.98rem;color:#27306E;'>"
     "Ranking y participación de mercado; siniestralidad, comisiones y gastos "
     "frente al <strong>promedio del sector</strong> (boletín SUDEASEG); primas mensuales en "
-    "<strong>USD</strong> con tipo de cambio BCV.</p>"
+    "<strong>USD</strong> al tipo oficial de cada mes.</p>"
     "<p style='margin:0;line-height:1.48;font-size:0.88rem;color:#4a4a4a;'>"
     "Todo proviene de información pública SUDEASEG: anuario <em>Seguro en Cifras</em>, boletines "
     "y series de primas. Los cierres contables oficiales son los de los estados financieros auditados.</p>"

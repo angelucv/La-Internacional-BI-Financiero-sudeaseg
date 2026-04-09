@@ -236,8 +236,8 @@ def _fig_pie_participacion(
             ),
         ),
         title=dict(
-            text=f"<b>Participación YTD {anio_curso}</b> · millones USD<br>"
-            f"<sup>Cierre {fech26.strftime('%Y-%m')}</sup>",
+            text=f"<b>Participación de mercado · {anio_curso}</b> · millones USD<br>"
+            f"<sup>Datos al cierre {fech26.strftime('%Y-%m')}</sup>",
             x=0.5,
             xanchor="center",
         ),
@@ -480,7 +480,7 @@ def _build_fig_primas_mensuales_top3(
 
 
 st.set_page_config(
-    page_title=f"Top 3 empresas | {APP_NAME_SHORT}",
+    page_title=f"Sector e Internacional | {APP_NAME_SHORT}",
     page_icon="🏆",
     layout="wide",
 )
@@ -515,7 +515,7 @@ st.markdown(
 
 render_demo_sidebar()
 
-render_brand_header(f"Top 3 YTD · USD (BCV) · Anuario {DATA_YEAR}")
+render_brand_header()
 
 try:
     dfm = load_primas_mensual_largo()
@@ -624,10 +624,10 @@ else:
                         key=f"gauge_main_{col_code}",
                     )
 
-st.markdown("### Participación en el mercado (YTD)")
+st.markdown("### Participación en el mercado")
 st.caption(
-    "Top 3 y **resto del mercado** · millones USD (tipo BCV) · "
-    "**La Internacional** resaltada si está en el Top 3."
+    "Tres primeras empresas y **resto del mercado** · millones USD al tipo de cada mes · "
+    "**La Internacional** resaltada si está entre las tres."
 )
 fig_pie_hero = _fig_pie_participacion(
     dfm,
@@ -645,9 +645,9 @@ st.plotly_chart(
     key="main_pie_participacion",
 )
 
-st.markdown("### Primas mensuales (Top 3)")
+st.markdown("### Primas mensuales (tres empresas)")
 st.caption(
-    f"Barras verticales agrupadas por mes · millones USD · **{anio_curso}**."
+    f"Barras verticales agrupadas por mes · millones USD · año **{anio_curso}**."
 )
 fig_primas_main = _build_fig_primas_mensuales_top3(dfm, tc, top3, anio_curso)
 st.plotly_chart(
@@ -659,7 +659,7 @@ st.plotly_chart(
 
 if rango is not None:
     st.success(
-        f"**La Internacional** — **#{rango}** en el ranking YTD {anio_curso} "
+        f"**La Internacional** — posición **#{rango}** en el ranking acumulado a {fech26.strftime('%Y-%m')} "
         f"({len(ranked)} empresas en el cuadro)."
     )
 
@@ -682,20 +682,20 @@ with tab_vol:
             {
                 "Ranking": int(r["Ranking"]),
                 "Empresa": r["empresa_raw"],
-                "YTD (M USD)": usd,
+                "Acum. año (M USD)": usd,
                 "% participación": float(r["pct_participacion"])
                 if pd.notna(r["pct_participacion"])
                 else None,
-                "YTD (miles Bs.)": float(r["primas_miles_bs"]),
+                "Acum. año (miles Bs.)": float(r["primas_miles_bs"]),
             }
         )
     show_tab = pd.DataFrame(rows_tab)
     st.dataframe(
         show_tab.style.format(
             {
-                "YTD (M USD)": "{:,.2f}",
+                "Acum. año (M USD)": "{:,.2f}",
                 "% participación": "{:.2f}",
-                "YTD (miles Bs.)": "{:,.0f}",
+                "Acum. año (miles Bs.)": "{:,.0f}",
             },
             na_rep="—",
         ),
@@ -760,7 +760,7 @@ with tab_ind:
                 hide_index=True,
             )
 
-            st.subheader("Gráficos por indicador (Top 3)")
+            st.subheader("Gráficos por indicador (tres empresas)")
             for row_i in range(0, len(INDICES_METRICAS), 2):
                 c_left, c_right = st.columns(2)
                 for ci, col_idx in enumerate((row_i, row_i + 1)):
@@ -779,10 +779,9 @@ with tab_ind:
                             key=f"tab_ind_bar_{col_code}_{col_idx}",
                         )
 
-    st.subheader(f"Indicadores financieros — anuario {DATA_YEAR} (cuadro 29)")
+    st.subheader(f"Indicadores financieros (cuadro 29 · referencia {DATA_YEAR})")
     st.caption(
-        "Referencia anual publicada en el anuario; no coincide en el tiempo con el YTD de primas "
-        "ni con el boletín mensual de índices."
+        "Cifras anuales del anuario publicado; el periodo puede no coincidir con las series mensuales de primas ni con el boletín de índices."
     )
     ind_df = ind.copy()
     ind_df["peer_id"] = ind_df["NOMBRE_EMPRESA"].map(empresa_peer_id)
@@ -808,11 +807,11 @@ with tab_ind:
     st.dataframe(ind_show, use_container_width=True, hide_index=True)
 
     st.markdown(
-        f"_Primas (pestaña «Volumen»): YTD **{anio_curso}** en USD según SUDEASEG + BCV._"
+        f"_Primas (pestaña «Volumen»): acumulado **{anio_curso}** en USD (metodología SUDEASEG + tipo de cambio mensual)._"
     )
 
 with tab_evo:
-    st.subheader("Evolución mes a mes — primas (Top 3)")
+    st.subheader("Evolución mes a mes — primas (tres empresas)")
     st.caption(
         f"Mismo gráfico que arriba · **Barras verticales** por mes · millones USD · **{anio_curso}**."
     )
@@ -824,7 +823,7 @@ with tab_evo:
         key="tab_evo_primas_mensuales",
     )
 
-    st.subheader("Evolución mes a mes — índices del boletín (Top 3)")
+    st.subheader("Evolución mes a mes — índices del boletín (tres empresas)")
     if idx_h is None or idx_h.empty:
         st.info(
             "No hay histórico de índices. Ejecute `python scripts/build_indices_por_empresa.py` "
