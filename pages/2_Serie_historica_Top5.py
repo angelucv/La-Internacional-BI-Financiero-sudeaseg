@@ -11,6 +11,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+from demo_boletin_tabla import render_cuadro_boletin_ranking
 from demo_config import (
     APP_NAME_SHORT,
     COLOR_BRAND_GOLD,
@@ -33,6 +34,7 @@ from demo_historico import (
     etiqueta_display,
     load_primas_mensual_largo,
     serie_peers,
+    tabla_ranking_en_fecha,
     variacion_interanual_diciembre,
 )
 
@@ -111,6 +113,17 @@ with m4:
 
 st.caption(
     f"USD: flujos mensuales al tipo BCV de cada mes · Cierre SUDEASEG **{pd.Timestamp(ult).strftime('%Y-%m-%d')}**."
+)
+
+rank_ult = tabla_ranking_en_fecha(df, pd.Timestamp(ult))
+render_cuadro_boletin_ranking(
+    st,
+    rank_ult,
+    df,
+    pd.Timestamp(ult),
+    top_n=10,
+    titulo="Mismo cuadro boletín en la fecha de análisis",
+    descripcion="Top 10 del ranking en el último cierre de la serie; **PNC al inicio** con la misma definición que en Top 3.",
 )
 
 if (

@@ -141,6 +141,52 @@ def tabla_ranking_en_fecha(df: pd.DataFrame, fecha: pd.Timestamp) -> pd.DataFram
     return sub
 
 
+def primas_acumuladas_al_inicio_mes(
+    df: pd.DataFrame, peer_id: str, fecha: pd.Timestamp
+) -> float | None:
+    """
+    Acumulado de primas netas cobradas (miles Bs.) al inicio del mes de `fecha`:
+    cierre del mes anterior en el mismo año; en enero, cierre de diciembre del año previo.
+    Si no hay dato previo, 0.0 (inicio de serie).
+    """
+    y, m = int(fecha.year), int(fecha.month)
+    g = df[df["peer_id"] == peer_id]
+    if g.empty:
+        return None
+    if m > 1:
+        prev = g[(g["year"] == y) & (g["month"] == m - 1)]
+        if not prev.empty:
+            return float(prev["primas_miles_bs"].iloc[0])
+        return None
+    prev_dec = g[(g["year"] == y - 1) & (g["month"] == 12)]
+    if not prev_dec.empty:
+        return float(prev_dec["primas_miles_bs"].iloc[0])
+    return 0.0
+
+
+def primas_acumuladas_al_inicio_mes(
+    df: pd.DataFrame, peer_id: str, fecha: pd.Timestamp
+) -> float | None:
+    """
+    Acumulado de primas netas cobradas (miles Bs.) **al inicio** del mes de corte:
+    mismo valor que el acumulado YTD publicado al **cierre del mes anterior**.
+    Enero → cierre de diciembre del año anterior (si existe en la serie); si no, 0.0.
+    """
+    y, m = int(fecha.year), int(fecha.month)
+    g = df[df["peer_id"] == peer_id]
+    if g.empty:
+        return None
+    if m > 1:
+        prev = g[(g["year"] == y) & (g["month"] == m - 1)]
+        if not prev.empty:
+            return float(prev["primas_miles_bs"].iloc[0])
+        return None
+    prev_dec = g[(g["year"] == y - 1) & (g["month"] == 12)]
+    if not prev_dec.empty:
+        return float(prev_dec["primas_miles_bs"].iloc[0])
+    return 0.0
+
+
 def variacion_interanual_diciembre(df: pd.DataFrame, peer_ids: list[str]) -> pd.DataFrame:
     """Variación % Dic vs Dic para cada año disponible (requiere mes 12 en ambos años)."""
     d = df[df["month"] == 12].copy()
