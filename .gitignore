@@ -1,0 +1,8 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+.env
+
+# Fuentes pesadas (PDF/XLSX); el demo usa CSV en data/public/. No versionar en GitHub.
+data/raw/

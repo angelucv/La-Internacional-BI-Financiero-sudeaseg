@@ -1,0 +1,10 @@
+[theme]
+primaryColor = "#FFCB05"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F4F6FC"
+textColor = "#27306E"
+font = "sans serif"
+
+# Logo y enlaces propios arriba del sidebar (ver demo_config.render_demo_sidebar)
+[client]
+showSidebarNavigation = false
