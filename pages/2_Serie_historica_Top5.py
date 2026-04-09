@@ -11,7 +11,12 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+from boletin_cuadro_resultados import load_resultado_tecnico_saldo
 from demo_boletin_tabla import render_cuadro_boletin_ranking
+from demo_resultado_boletin_ui import (
+    render_seccion_resultado_tecnico_saldo,
+    render_sin_datos_resultado,
+)
 from demo_config import (
     APP_NAME_SHORT,
     COLOR_BRAND_GOLD,
@@ -125,6 +130,12 @@ render_cuadro_boletin_ranking(
     titulo="Mismo cuadro boletín en la fecha de análisis",
     descripcion="Top 10 del ranking en el último cierre de la serie; **PNC al inicio** con la misma definición que en Top 3.",
 )
+
+df_res_boletin = load_resultado_tecnico_saldo()
+if df_res_boletin is not None and not df_res_boletin.empty:
+    render_seccion_resultado_tecnico_saldo(st, df_res_boletin, df, pd.Timestamp(ult))
+else:
+    render_sin_datos_resultado(st)
 
 if (
     primas_i_bs

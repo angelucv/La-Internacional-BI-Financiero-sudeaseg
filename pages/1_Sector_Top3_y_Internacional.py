@@ -11,7 +11,12 @@ import plotly.graph_objects as go
 import streamlit as st
 from plotly.subplots import make_subplots
 
+from boletin_cuadro_resultados import load_resultado_tecnico_saldo
 from demo_boletin_tabla import render_cuadro_boletin_ranking
+from demo_resultado_boletin_ui import (
+    render_seccion_resultado_tecnico_saldo,
+    render_sin_datos_resultado,
+)
 from demo_config import (
     APP_NAME_SHORT,
     COLOR_BRAND_GOLD,
@@ -577,6 +582,12 @@ render_cuadro_boletin_ranking(
     descripcion="Incluye la columna **PNC al inicio** (acumulado previo al mes de corte). "
     "La fila TOTAL suma miles Bs. y los puntos de participación de las filas visibles (subconjunto Top 10).",
 )
+
+df_res_boletin = load_resultado_tecnico_saldo()
+if df_res_boletin is not None and not df_res_boletin.empty:
+    render_seccion_resultado_tecnico_saldo(st, df_res_boletin, dfm, pd.Timestamp(fech26))
+else:
+    render_sin_datos_resultado(st)
 
 st.markdown(
     '<p class="gauge-section-title">Indicadores — La Internacional vs sector (boletín SUDEASEG)</p>',
