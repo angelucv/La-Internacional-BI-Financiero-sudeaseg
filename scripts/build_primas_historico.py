@@ -2,6 +2,9 @@
 Descarga (si aplica) y compila primas netas cobradas por empresa desde los Excel
 oficiales de SUDEASEG (cifras mensuales) en un CSV largo: 2023 → último mes disponible 2026.
 
+Alternativa si trabaja solo con el PDF del boletín: `python scripts/build_primas_desde_boletin_pdf.py`
+(escribe el mismo `data/public/primas_netas_mensual_largo.csv`).
+
 Uso: python scripts/build_primas_historico.py
 """
 from __future__ import annotations
