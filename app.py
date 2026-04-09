@@ -29,16 +29,9 @@ st.markdown(
     "(diferencia de acumulados) para ver el ritmo sin el efecto de cierre de año."
 )
 
-st.subheader("Cómo usarlo")
-st.markdown(
-    f"- **Sector e Internacional**: ranking, primas en USD (tipo de cambio del mes) e **indicadores financieros anuales** "
-    f"por empresa (referencia anuario {DATA_YEAR}).\n"
-    "- **Serie histórica**: evolución del flujo mensual y participación; comparativa con el líder del mercado "
-    "y La Internacional.\n"
-    "- Los importes siguen las **unidades y definiciones** de los cuadros oficiales (anuario y series mensuales SUDEASEG)."
-)
-
-with st.expander("Glosario de terminología", expanded=False):
+st.subheader("Glosario de terminología")
+st.caption("Lectura recomendada antes de interpretar rankings e índices del panel.")
+with st.container(border=True):
     st.markdown(
         """
 **Marco**
@@ -81,3 +74,12 @@ with st.expander("Glosario de terminología", expanded=False):
 _Las definiciones contables y regulatorias finales están en la normativa y en los documentos fuente de SUDEASEG._
 """
     )
+
+st.subheader("Cómo usarlo")
+st.markdown(
+    f"- **Sector e Internacional**: ranking, primas en USD (tipo de cambio del mes) e **indicadores financieros anuales** "
+    f"por empresa (referencia anuario {DATA_YEAR}).\n"
+    "- **Serie histórica**: evolución del flujo mensual y participación; comparativa con el líder del mercado "
+    "y La Internacional.\n"
+    "- Los importes siguen las **unidades y definiciones** de los cuadros oficiales (anuario y series mensuales SUDEASEG)."
+)
