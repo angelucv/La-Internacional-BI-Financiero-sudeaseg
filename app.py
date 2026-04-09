@@ -28,7 +28,7 @@ render_demo_sidebar()
 
 render_brand_header("Panel para reunión de accionistas — datos oficiales SUDEASEG")
 
-st.title("Bienvenida al demo")
+st.header("Bienvenida al demo")
 st.markdown(
     f"Este panel es una **vista rápida** para la conversación con accionistas: "
     f"**ranking y Top 3** con la serie **más actual (2026, YTD)** según SUDEASEG, "
