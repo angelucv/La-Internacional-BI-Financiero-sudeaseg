@@ -22,15 +22,16 @@ render_demo_sidebar()
 render_brand_header("Panel para reunión de accionistas — datos oficiales SUDEASEG")
 
 st.markdown(
-    "Este panel es una **vista rápida** para la conversación con accionistas: "
-    "**ranking y participación** con las primas **más recientes** publicadas por SUDEASEG "
-    "(acumulado del año hasta el último mes disponible en la descarga), "
-    "más **indicadores** del anuario de referencia y una **serie histórica** con primas **mensuales** "
-    "(diferencia de acumulados) para ver el ritmo sin el efecto de cierre de año."
+    "Este **tablero** es un demo de información financiera y de mercado para la reunión de accionistas: "
+    "reúne en un solo lugar datos **públicos de SUDEASEG** sobre **La Internacional** frente al sector "
+    "(**volumen y participación** con el acumulado del año hasta el último mes disponible en la descarga, "
+    "**índices del boletín** frente al sector, **indicadores anuales** del anuario de referencia y una "
+    "**serie histórica** de primas mensuales para ver el ritmo sin el sesgo de cierre de año). "
+    "**A continuación** encontrará un **glosario** con la terminología básica que se usa en las pantallas."
 )
 
 st.subheader("Glosario de terminología")
-st.caption("Lectura recomendada antes de interpretar rankings e índices del panel.")
+st.caption("Definiciones alineadas a lo que muestran las siguientes pantallas.")
 with st.container(border=True):
     st.markdown(
         """
