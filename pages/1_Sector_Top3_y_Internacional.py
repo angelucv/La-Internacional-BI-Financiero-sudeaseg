@@ -28,6 +28,7 @@ from demo_fx import (
     serie_mensual_millones_usd,
     ytd_millones_usd_desde_serie_mensual,
 )
+from boletin_cuadro_resultados import load_resultado_tecnico_saldo
 from demo_historico import (
     empresa_peer_id,
     etiqueta_display,
@@ -35,6 +36,7 @@ from demo_historico import (
     tabla_ranking_en_fecha,
     ultimo_periodo_en_ano,
 )
+from demo_resultado_boletin_ui import render_seccion_resultado_tecnico_saldo, render_sin_datos_resultado
 
 MESES_NOMBRE = {
     1: "Enero",
@@ -662,6 +664,29 @@ if rango is not None:
         f"**La Internacional** — posición **#{rango}** en el ranking acumulado a {fech26.strftime('%Y-%m')} "
         f"({len(ranked)} empresas en el cuadro)."
     )
+
+st.divider()
+st.subheader("Resultado técnico / Saldo (Top 5 por PNC, boletín)")
+st.caption(
+    "Misma tabla que en **Inicio** y **Serie histórica**: orden **#1–#5** según **primas netas cobradas** "
+    "(infografía ~pág. 10); importes del **1 Cuadro de Resultados** (~pág. 24). "
+    f"Corte por defecto alineado al mes de análisis de esta página (**{fech26.strftime('%Y-%m')}**)."
+)
+try:
+    df_res_sector = load_resultado_tecnico_saldo()
+    if df_res_sector is not None and not df_res_sector.empty:
+        render_seccion_resultado_tecnico_saldo(
+            st,
+            df_res_sector,
+            dfm,
+            pd.Timestamp(fech26),
+            selectbox_key="corte_cuadro_sector_top3",
+            show_inner_heading=False,
+        )
+    else:
+        render_sin_datos_resultado(st)
+except Exception as e:
+    st.warning(f"No se pudo cargar la sección de resultado técnico: {e}")
 
 tab_vol, tab_ind, tab_evo = st.tabs(
     ["Volumen y participación", "Indicadores — Boletín en cifras", "Evolución mensual"]

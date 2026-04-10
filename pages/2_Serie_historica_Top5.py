@@ -131,9 +131,22 @@ render_cuadro_boletin_ranking(
     descripcion="Top 10 del ranking en el último cierre de la serie; **PNC al inicio** con la misma definición que en Sector e Internacional.",
 )
 
+st.divider()
+st.subheader("Resultado técnico / Saldo (Top 5 por PNC, boletín)")
+st.caption(
+    "Misma sección que en **Inicio** y **Sector**: Top **5** por ranking PNC (~pág. 10) con columnas del cuadro 1 (~pág. 24). "
+    f"Serie de primas desde 2023; último cierre de referencia **{pd.Timestamp(ult).strftime('%Y-%m-%d')}**."
+)
 df_res_boletin = load_resultado_tecnico_saldo()
 if df_res_boletin is not None and not df_res_boletin.empty:
-    render_seccion_resultado_tecnico_saldo(st, df_res_boletin, df, pd.Timestamp(ult))
+    render_seccion_resultado_tecnico_saldo(
+        st,
+        df_res_boletin,
+        df,
+        pd.Timestamp(ult),
+        selectbox_key="corte_cuadro_serie_historica",
+        show_inner_heading=False,
+    )
 else:
     render_sin_datos_resultado(st)
 

@@ -262,6 +262,10 @@ def render_demo_sidebar():
         label="Serie histórica Top5",
         icon="📈",
     )
+    st.sidebar.caption(
+        "En **Sector** y **Serie histórica** hay una sección común: "
+        "tabla y gráfico **Resultado técnico / Top 5 por PNC** (cuadro 1 del boletín)."
+    )
     st.sidebar.markdown("---")
     st.sidebar.markdown(
         f'<p style="font-size:1.12rem;font-weight:700;color:#27306E;line-height:1.3;margin:0 0 0.45rem 0;">'

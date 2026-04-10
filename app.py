@@ -6,9 +6,13 @@ ROOT = Path(__file__).resolve().parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+import pandas as pd
 import streamlit as st
 
+from boletin_cuadro_resultados import load_resultado_tecnico_saldo
 from demo_config import APP_NAME_SHORT, DATA_YEAR, render_brand_header, render_demo_sidebar
+from demo_historico import conjunto_analisis, load_primas_mensual_largo
+from demo_resultado_boletin_ui import render_seccion_resultado_tecnico_saldo, render_sin_datos_resultado
 
 st.set_page_config(
     page_title=f"Inicio | {APP_NAME_SHORT}",
@@ -84,3 +88,26 @@ st.markdown(
     "y La Internacional.\n"
     "- Los importes siguen las **unidades y definiciones** de los cuadros oficiales (anuario y series mensuales SUDEASEG)."
 )
+
+st.subheader("Dashboard — Top 5 resultado técnico / PNC (boletín)")
+st.caption(
+    "Cuadro «Resultado técnico / Saldo de operaciones» con **PNC** y **% Saldo / PNC**; "
+    "misma lógica que en **Serie histórica** (corte alineable al último dato de primas)."
+)
+try:
+    df_primas_home = load_primas_mensual_largo()
+    ult_home, _ = conjunto_analisis(df_primas_home, n=5)
+    df_res_home = load_resultado_tecnico_saldo()
+    if df_res_home is not None and not df_res_home.empty:
+        render_seccion_resultado_tecnico_saldo(
+            st,
+            df_res_home,
+            df_primas_home,
+            pd.Timestamp(ult_home),
+            selectbox_key="corte_cuadro_inicio",
+            show_inner_heading=False,
+        )
+    else:
+        render_sin_datos_resultado(st)
+except Exception as e:
+    st.warning(f"No se pudo cargar la vista de resultado técnico: {e}")

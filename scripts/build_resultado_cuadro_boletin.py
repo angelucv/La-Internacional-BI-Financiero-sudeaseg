@@ -112,6 +112,7 @@ def main() -> int:
         claves = {(int(r["year"]), int(r["month"])) for _, r in nuevo.iterrows()}
         mask = prev.apply(lambda r: (int(r["year"]), int(r["month"])) not in claves, axis=1)
         comb = pd.concat([prev[mask], nuevo], ignore_index=True)
+        comb["fecha_periodo"] = pd.to_datetime(comb["fecha_periodo"], errors="coerce")
         comb = comb.sort_values(["fecha_periodo", "ranking"]).reset_index(drop=True)
         comb["fecha_periodo"] = comb["fecha_periodo"].dt.strftime("%Y-%m-%d")
         comb.to_csv(out, sep=";", index=False, encoding="utf-8")
